@@ -1,11 +1,19 @@
-# ZMK Module Template
+# ZMK TentaTwo Module
 
-This repository contains a template for a ZMK module, as it would most frequently be used. 
+This module contains the following modules for the tentatwo:
+- keyboard defining the tentatwo shield
+- behavior for sending tentatwo HID reports 
 
-## Usage
+# Notes
 
-Read through the [ZMK Module Creation](https://zmk.dev/docs/development/module-creation) page for details on how to configure this template.
+The (USB)HID report descriptor is described in `hid`.
 
-## More Info
+ZMK supports two transport modes, USB and BLE.
+`usb_hid` covers the USB transport and `hog` (HID over GATT) covers the BLE transport.
 
-For more info on modules, you can read through  through the [Zephyr modules page](https://docs.zephyrproject.org/3.5.0/develop/modules.html) and [ZMK's page on using modules](https://zmk.dev/docs/features/modules). [Zephyr's west manifest page](https://docs.zephyrproject.org/3.5.0/develop/west/manifest.html#west-manifests) may also be of use.
+How I imagine this solution working is the behavior will trigger the appropriate tentatwo report to be sent using either the USB-HID or HoG implementation.
+The software side reading the custom reports will handle things like modifiers.
+
+# References
+
+The custom HID report implementation as a module is based off https://github.com/badjeff/zmk-hid-io.

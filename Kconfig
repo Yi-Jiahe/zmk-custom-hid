@@ -1,0 +1,3 @@
+config ZMK_TENTATWO
+  bool "is a TentaTwo"
+  default n

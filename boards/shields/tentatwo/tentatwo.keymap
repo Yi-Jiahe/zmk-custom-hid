@@ -1,0 +1,24 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer { // Layer 0
+            // TODO: Replace behaviors with tentatwo behaviors
+            // -------------------------------------------------
+            // |    |         |      |      |
+            // |    |    |   |   |
+            // |    |    |    |
+            bindings = <
+                &kp ESC                    &kp SLASH                     &kp H      &kp P
+                &layer_one_underglow       &kp LC(T)                 &kp LS(Z)  &kp LC(Z)
+                &layer_two_underglow       &layer_three_underglow    &layer_four_underglow &kp LC(LA(R))
+            >;
+
+            sensor-bindings = <&inc_dec_kp CARET MINUS>;
+        };
+    };
+ };
