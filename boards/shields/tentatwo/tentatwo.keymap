@@ -1,5 +1,6 @@
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk-tentatwo>;
+#include <behaviors/tentatwo.dtsi>
+#include <dt-bindings/zmk-tentatwo/tentatwo.h>
 
 / {
     behaviors {
@@ -22,8 +23,10 @@
             bindings = <
                 &tentatwo TENTATWO_BUTTON_0 &tentatwo TENTATWO_BUTTON_1 &tentatwo TENTATWO_BUTTON_2 &tentatwo TENTATWO_BUTTON_3
                 &tentatwo TENTATWO_BUTTON_4 &tentatwo TENTATWO_BUTTON_5 &tentatwo TENTATWO_BUTTON_6 &tentatwo TENTATWO_BUTTON_7
-                &none                       &none                       &none
+                &none                       &none                       &none                       &none
             >;
+
+            sensor-bindings = <&enc_none>;
         };
     };
  };
