@@ -1,0 +1,5 @@
+description: TentaTwo behavior
+
+compatible: "zmk,behavior-tentatwo"
+
+include: one_param.yaml

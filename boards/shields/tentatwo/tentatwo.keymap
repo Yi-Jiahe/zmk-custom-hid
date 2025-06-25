@@ -1,24 +1,29 @@
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk-tentatwo>;
 
 / {
+    behaviors {
+        enc_none: enc_none {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&none>, <&none>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer { // Layer 0
             // TODO: Replace behaviors with tentatwo behaviors
             // -------------------------------------------------
-            // |    |         |      |      |
-            // |    |    |   |   |
-            // |    |    |    |
+            // | 0 | 1 | 2 | 3 |
+            // | 4 | 5 | 6 | 7 |
+            // |   |   |   |   |
             bindings = <
-                &kp ESC                    &kp SLASH                     &kp H      &kp P
-                &layer_one_underglow       &kp LC(T)                 &kp LS(Z)  &kp LC(Z)
-                &layer_two_underglow       &layer_three_underglow    &layer_four_underglow &kp LC(LA(R))
+                &tentatwo TENTATWO_BUTTON_0 &tentatwo TENTATWO_BUTTON_1 &tentatwo TENTATWO_BUTTON_2 &tentatwo TENTATWO_BUTTON_3
+                &tentatwo TENTATWO_BUTTON_4 &tentatwo TENTATWO_BUTTON_5 &tentatwo TENTATWO_BUTTON_6 &tentatwo TENTATWO_BUTTON_7
+                &none                       &none                       &none
             >;
-
-            sensor-bindings = <&inc_dec_kp CARET MINUS>;
         };
     };
  };
