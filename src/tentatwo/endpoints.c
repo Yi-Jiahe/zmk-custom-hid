@@ -4,7 +4,7 @@
 #include <zmk/usb_hid.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_DECLARE(hid_io, CONFIG_ZMK_HID_IO_LOG_LEVEL);
+LOG_MODULE_DECLARE(tentatwo, CONFIG_ZMK_LOG_LEVEL);
 
 #include <zmk-tentatwo/endpoints.h>
 #include <zmk-tentatwo/hid.h>
@@ -29,5 +29,9 @@ int zmk_endpoints_send_tentatwo_report() {
     case ZMK_TRANSPORT_BLE: break; // TODO: Implement BLE support
 
     LOG_ERR("Unsupported endpoint transport %d", current_instance.transport);
+    return -ENOTSUP;
+    }
+    
+    LOG_ERR("Unhandled endpoint transport %d", current_instance.transport);
     return -ENOTSUP;
 }

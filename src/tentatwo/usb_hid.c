@@ -12,7 +12,7 @@
 
 #include <zmk-tentatwo/hid.h>
 
-LOG_MODULE_DECLARE(hid_io, CONFIG_ZMK_HID_IO_LOG_LEVEL);
+LOG_MODULE_DECLARE(tentatwo, CONFIG_ZMK_LOG_LEVEL);
 
 static const struct device *hid_dev;
 
@@ -27,13 +27,20 @@ static void in_ready_cb(const struct device *dev) { k_sem_give(&hid_sem); }
 #define HID_REPORT_TYPE_OUTPUT 0x200
 #define HID_REPORT_TYPE_FEATURE 0x300
 
+static uint8_t *get_tentatwo_report(size_t *len)
+{
+    struct zmk_hid_tentatwo_report *report = zmk_hid_get_tentatwo_report();
+    *len = sizeof(*report);
+    return (uint8_t *)report;
+}
+
 static int get_report_cb(const struct device *dev, struct usb_setup_packet *setup, int32_t *len,
                          uint8_t **data)
 {
     switch (setup->wValue & HID_GET_REPORT_TYPE_MASK)
     {
     case HID_REPORT_TYPE_INPUT:
-        struct zmk_hid_tentatwo_report *report = zmk_hid_get_report();
+        struct zmk_hid_tentatwo_report *report = zmk_hid_get_tentatwo_report();
         *data = (uint8_t *)report;
         *len = sizeof(*report);
         break;
@@ -92,6 +99,7 @@ int zmk_usb_hid_send_tentatwo_report(void)
 
 static int zmk_usb_hid_init(void)
 {
+    // The additional USD HID device, zero-indexed
     hid_dev = device_get_binding("HID_1");
     if (hid_dev == NULL)
     {
@@ -99,9 +107,13 @@ static int zmk_usb_hid_init(void)
         return -EINVAL;
     }
 
+    LOG_INF("Registering HID device %s", hid_dev->name);
     usb_hid_register_device(hid_dev, zmk_hid_tentatwo_report_desc, sizeof(zmk_hid_tentatwo_report_desc), &ops);
+    LOG_INF("HID device %s registered", hid_dev->name);
 
+    LOG_INF("Initializing HID device %s", hid_dev->name);
     usb_hid_init(hid_dev);
+    LOG_INF("HID device %s initialized", hid_dev->name);
 
     return 0;
 }

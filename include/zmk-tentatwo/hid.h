@@ -8,7 +8,7 @@
 #define HID_USAGE_PAGE_VENDOR_DEFINED 0xFF
 #define ZMK_HID_REPORT_ID_TENTATWO 0x02
 
-static const uint_8_t zmk_hid_tentatwo_report_desc[] = {
+static const uint8_t zmk_hid_tentatwo_report_desc[] = {
   HID_USAGE_PAGE(HID_USAGE_PAGE_VENDOR_DEFINED),
   HID_COLLECTION(HID_COLLECTION_APPLICATION),
     // 8 2-state buttons, one bit each
@@ -30,4 +30,4 @@ struct zmk_hid_tentatwo_report {
 
 int toggle_button(uint8_t button);
 
-struct zmk_hid_tentatwo_report *get_tentatwo_report(void);
+struct zmk_hid_tentatwo_report *zmk_hid_get_tentatwo_report(void);
