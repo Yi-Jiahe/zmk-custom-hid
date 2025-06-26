@@ -112,7 +112,12 @@ static int zmk_usb_hid_init(void)
     LOG_INF("HID device %s registered", hid_dev->name);
 
     LOG_INF("Initializing HID device %s", hid_dev->name);
-    usb_hid_init(hid_dev);
+    int err = usb_hid_init(hid_dev);
+    if (err != 0)
+    {
+        LOG_ERR("Failed to initialize HID device %s: %d", hid_dev->name, err);
+        return err;
+    }
     LOG_INF("HID device %s initialized", hid_dev->name);
 
     return 0;
