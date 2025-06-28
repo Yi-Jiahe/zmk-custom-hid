@@ -16,7 +16,7 @@ LOG_MODULE_DECLARE(tentatwo, CONFIG_ZMK_LOG_LEVEL);
 static int toggle_binding(struct zmk_behavior_binding *binding,
                           struct zmk_behavior_binding_event event)
 {
-  uint8_t button = binding->param1;
+  uint16_t button = binding->param1;
   toggle_button(button);
   zmk_endpoints_send_tentatwo_report();
 

@@ -1,4 +1,3 @@
-
 #include "zmk/keys.h"
 
 #include <zephyr/logging/log.h>
@@ -13,11 +12,12 @@ LOG_MODULE_DECLARE(tentatwo, CONFIG_ZMK_LOG_LEVEL);
 static struct zmk_hid_tentatwo_report tentatwo_report = {
     .body = {
         .buttons = 0,
+        .padding = 0,
     },
 };
 
-int toggle_button(uint8_t button) {
-    if (button >= 8) {
+int toggle_button(uint16_t button) {
+    if (button >= 12) {
         LOG_ERR("Invalid button index: %d", button);
         return -EINVAL;
     }
