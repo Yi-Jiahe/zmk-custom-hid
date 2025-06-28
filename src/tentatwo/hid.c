@@ -16,7 +16,7 @@ static struct zmk_hid_tentatwo_report tentatwo_report = {
     },
 };
 
-int toggle_button(uint16_t button) {
+int toggle_button(uint8_t button) {
     if (button >= 12) {
         LOG_ERR("Invalid button index: %d", button);
         return -EINVAL;
@@ -25,6 +25,25 @@ int toggle_button(uint16_t button) {
     // Toggle the specified button
     tentatwo_report.body.buttons ^= (1 << button);
     LOG_DBG("Toggled button %d, new state: 0x%02X", button, tentatwo_report.body.buttons);
+
+    return 0;
+}
+
+int set_encoder(int8_t val) {
+    switch (val) {
+    case -1:
+        tentatwo_report.body.encoder = 0b11;
+        break;
+    case 0:
+        tentatwo_report.body.encoder = 0b00;
+        break;
+    case 1:
+        tentatwo_report.body.encoder = 0b01;
+        break;
+    default:
+        LOG_ERR("Invalid encoder value: %d", val);
+        return -EINVAL;
+    }
 
     return 0;
 }

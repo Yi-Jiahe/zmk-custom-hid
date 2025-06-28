@@ -13,28 +13,56 @@ LOG_MODULE_DECLARE(tentatwo, CONFIG_ZMK_LOG_LEVEL);
 
 #if DT_HAS_COMPAT_STATUS_OKAY(DT_DRV_COMPAT)
 
-static int toggle_binding(struct zmk_behavior_binding *binding,
-                          struct zmk_behavior_binding_event event)
-{
-  uint16_t button = binding->param1;
-  toggle_button(button);
-  zmk_endpoints_send_tentatwo_report();
-
-  return ZMK_BEHAVIOR_OPAQUE;
-}
-
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event)
 {
   LOG_DBG("on_keymap_binding_pressed: button %d", binding->param1);
-  return toggle_binding(binding, event);
+  uint8_t param1 = binding->param1;
+
+  if (param1 >= 0 && param1 < 12)
+  {
+    toggle_button((uint16_t)param1);
+  }
+  else if (param1 == 12)
+  {
+    set_encoder(-1);
+  }
+  else if (param1 == 13)
+  {
+    set_encoder(1);
+  }
+  else
+  {
+    return -EINVAL;
+  }
+
+  zmk_endpoints_send_tentatwo_report();
+
+  return ZMK_BEHAVIOR_OPAQUE;
 }
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event)
 {
   LOG_DBG("on_keymap_binding_released: button %d", binding->param1);
-  return toggle_binding(binding, event);
+  uint8_t param1 = binding->param1;
+
+  if (param1 >= 0 && param1 < 12)
+  {
+    toggle_button((uint16_t)param1);
+  }
+  else if (param1 < 14)
+  {
+    set_encoder(0);
+  }
+  else
+  {
+    return -EINVAL;
+  }
+
+  zmk_endpoints_send_tentatwo_report();
+
+  return ZMK_BEHAVIOR_OPAQUE;
 }
 
 static const struct behavior_driver_api behavior_tentatwo_driver_api = {

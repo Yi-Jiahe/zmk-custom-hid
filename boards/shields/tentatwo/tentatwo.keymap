@@ -8,7 +8,7 @@
         enc: enc {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
+            bindings = <&tentatwo>, <&tentatwo>;
         };
     };
 
@@ -27,7 +27,7 @@
                 &tentatwo TENTATWO_BUTTON_8  &tentatwo TENTATWO_BUTTON_9  &tentatwo TENTATWO_BUTTON_10 &tentatwo TENTATWO_BUTTON_11
             >;
 
-            sensor-bindings = <&enc MINUS PLUS>;
+            sensor-bindings = <&enc TENTATWO_ENCODER_DEC TENTATWO_ENCODER_INC>;
         };
     };
  };
